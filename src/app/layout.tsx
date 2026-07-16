@@ -1,6 +1,11 @@
 import type { Metadata } from "next";
 import { Sora, Hanken_Grotesk } from "next/font/google";
 import "./globals.css";
+import { ShaderBackground } from "@/components/ShaderBackground";
+import { CursorGlow } from "@/components/CursorGlow";
+import { TopNavBar } from "@/components/TopNavBar";
+import { SideNavBar } from "@/components/SideNavBar";
+import { Footer } from "@/components/Footer";
 
 const sora = Sora({
   subsets: ["latin"],
@@ -28,9 +33,20 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${sora.variable} ${hanken.variable}`}
+      className={`${sora.variable} ${hanken.variable} scroll-smooth`}
     >
-      <body>{children}</body>
+      <body>
+        <ShaderBackground />
+        <CursorGlow />
+        <TopNavBar />
+        <SideNavBar />
+
+        {/* Offset clears the fixed sidebar on desktop */}
+        <div className="relative z-10 md:ml-20">
+          {children}
+          <Footer />
+        </div>
+      </body>
     </html>
   );
 }

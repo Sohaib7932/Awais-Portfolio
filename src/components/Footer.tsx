@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { footer, profile } from "@/data/portfolio";
 import { Icon } from "@/components/Icon";
 
@@ -5,7 +6,7 @@ export function Footer() {
   return (
     <footer
       id="contact"
-      className="relative z-10 flex flex-col items-center justify-between gap-6 overflow-hidden border-t border-white/10 bg-surface-lowest bg-gradient-to-t from-primary/10 to-transparent px-6 py-12 md:ml-20 md:flex-row md:px-20"
+      className="relative flex flex-col items-center justify-between gap-6 overflow-hidden border-t border-white/10 bg-surface-lowest bg-gradient-to-t from-primary/10 to-transparent px-6 py-12 md:flex-row md:px-20"
     >
       {/* Decorative node */}
       <div className="absolute left-1/2 top-0 h-[2px] w-24 -translate-x-1/2 bg-gradient-to-r from-transparent via-primary to-transparent" />
@@ -22,13 +23,13 @@ export function Footer() {
 
       <div className="flex items-center gap-12">
         {footer.links.map((link) => (
-          <a
+          <Link
             key={link.href}
             href={link.href}
             className="font-tech text-label uppercase text-on-surface-variant/60 transition-colors duration-500 hover:text-primary"
           >
             {link.label}
-          </a>
+          </Link>
         ))}
         <a
           href={`mailto:${profile.email}`}

@@ -13,7 +13,14 @@ export type IconName =
   | "play"
   | "download"
   | "mail"
-  | "arrow-right";
+  | "arrow-right"
+  | "cube"
+  | "wand"
+  | "layers"
+  | "image"
+  | "scissors"
+  | "zap"
+  | "chip";
 
 const paths: Record<IconName, React.ReactNode> = {
   grid: (
@@ -76,6 +83,56 @@ const paths: Record<IconName, React.ReactNode> = {
     <>
       <path d="M5 12h14" />
       <path d="M13 6l6 6-6 6" />
+    </>
+  ),
+  /* 3D / Blender */
+  cube: (
+    <>
+      <path d="M12 2l9 5v10l-9 5-9-5V7l9-5z" />
+      <path d="M3 7l9 5 9-5" />
+      <path d="M12 12v10" />
+    </>
+  ),
+  /* Motion graphics / After Effects */
+  wand: (
+    <>
+      <path d="M15 4V2M15 10V8M12.5 6h-2M19.5 6h-2" />
+      <path d="M18 14l-8.5 8.5a1.4 1.4 0 0 1-2-2L16 12" />
+      <path d="M14.5 9.5l2 2" />
+    </>
+  ),
+  /* Unity / engines */
+  layers: (
+    <>
+      <path d="M12 3l9 5-9 5-9-5 9-5z" />
+      <path d="M3 13l9 5 9-5" />
+      <path d="M3 17l9 5 9-5" />
+    </>
+  ),
+  /* Photoshop / textures */
+  image: (
+    <>
+      <rect x="3" y="4" width="18" height="16" rx="2" />
+      <circle cx="8.5" cy="9.5" r="1.5" />
+      <path d="M21 15l-5-5L5 20" />
+    </>
+  ),
+  /* Premiere / editing */
+  scissors: (
+    <>
+      <circle cx="6" cy="6" r="2.5" />
+      <circle cx="6" cy="18" r="2.5" />
+      <path d="M8 8l12 10M20 6L8.5 16" />
+    </>
+  ),
+  /* Unreal / power */
+  zap: <path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z" />,
+  /* Skills / toolkit */
+  chip: (
+    <>
+      <rect x="6" y="6" width="12" height="12" rx="2" />
+      <rect x="9.5" y="9.5" width="5" height="5" rx="1" />
+      <path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3" />
     </>
   ),
 };

@@ -1,7 +1,9 @@
+import Link from "next/link";
 import { profile, sideNavLinks } from "@/data/portfolio";
 import { Icon } from "@/components/Icon";
 
-/* Collapsed rail that expands on hover (desktop only). */
+/* Collapsed rail that expands on hover (desktop only).
+   These links only jump between sections of the home page. */
 export function SideNavBar() {
   return (
     <aside className="group fixed left-0 top-0 z-40 hidden h-screen w-20 flex-col overflow-hidden border-r border-white/5 bg-surface-low/60 backdrop-blur-2xl transition-all duration-500 hover:w-64 md:flex">
@@ -18,31 +20,27 @@ export function SideNavBar() {
         </div>
       </div>
 
-      {/* Nav */}
-      <nav className="mt-20 flex w-full flex-col">
-        {sideNavLinks.map((link, i) => (
-          <a
+      {/* Section links */}
+      <nav className="mt-12 flex w-full flex-col">
+        {sideNavLinks.map((link) => (
+          <Link
             key={link.href}
             href={link.href}
-            className={`flex items-center gap-6 p-6 transition-all ${
-              i === 0
-                ? "border-l-4 border-tertiary bg-secondary-container/30 text-tertiary"
-                : "text-on-surface-variant hover:bg-surface-variant/30 hover:text-tertiary"
-            }`}
+            className="flex items-center gap-6 border-l-4 border-transparent p-6 text-on-surface-variant transition-all hover:border-tertiary hover:bg-surface-variant/30 hover:text-tertiary"
           >
             <Icon name={link.icon} size={22} className="shrink-0" />
-            <span className="font-tech text-label uppercase tracking-widest opacity-0 transition-opacity group-hover:opacity-100">
+            <span className="whitespace-nowrap font-tech text-label uppercase tracking-widest opacity-0 transition-opacity group-hover:opacity-100">
               {link.label}
             </span>
-          </a>
+          </Link>
         ))}
       </nav>
 
       {/* Bottom CTA */}
       <div className="mt-auto w-full p-6">
         <a
-          href="#contact"
-          className="block w-full bg-tertiary py-1 text-center font-tech text-[10px] uppercase tracking-widest text-on-tertiary opacity-0 transition-opacity group-hover:opacity-100 rounded-lg"
+          href={`mailto:${profile.email}`}
+          className="block w-full whitespace-nowrap rounded-lg bg-tertiary py-2 text-center font-tech text-[10px] font-bold uppercase tracking-widest text-on-tertiary opacity-0 transition-opacity group-hover:opacity-100"
         >
           Get in Touch
         </a>

@@ -1,25 +1,15 @@
-import { ShaderBackground } from "@/components/ShaderBackground";
-import { TopNavBar } from "@/components/TopNavBar";
-import { SideNavBar } from "@/components/SideNavBar";
 import { Hero } from "@/components/Hero";
 import { About } from "@/components/About";
-import { FeaturedWork } from "@/components/FeaturedWork";
-import { Footer } from "@/components/Footer";
+import { SkillsGrid } from "@/components/SkillsGrid";
+import { ProjectArchive } from "@/components/ProjectArchive";
 
 export default function Home() {
   return (
-    <>
-      <ShaderBackground />
-      <TopNavBar />
-      <SideNavBar />
-
-      <main className="relative z-10 pt-32 md:ml-20">
-        <Hero />
-        <About />
-        <FeaturedWork />
-      </main>
-
-      <Footer />
-    </>
+    <main className="pt-32">
+      <Hero />
+      <About />
+      <SkillsGrid />
+      <ProjectArchive limit={2} />
+    </main>
   );
 }

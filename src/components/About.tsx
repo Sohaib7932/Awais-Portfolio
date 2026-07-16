@@ -1,4 +1,4 @@
-import { about, skills } from "@/data/portfolio";
+import { about } from "@/data/portfolio";
 import { Icon } from "@/components/Icon";
 
 export function About() {
@@ -23,90 +23,55 @@ export function About() {
           </p>
         </div>
 
-        {/* Bento grid */}
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-          {/* Profile / education + process */}
-          <div className="glass group relative overflow-hidden rounded-xl p-12 md:col-span-2">
-            <div className="pointer-events-none absolute right-0 top-0 p-6 text-primary opacity-20 transition-opacity group-hover:opacity-100">
-              <Icon name="fingerprint" size={64} />
-            </div>
-            <div className="relative z-10 grid grid-cols-1 gap-12 md:grid-cols-2">
-              {/* Education */}
-              <div>
-                <h3 className="mb-6 font-tech text-label uppercase text-primary">
-                  Education
-                </h3>
-                <div className="space-y-6">
-                  {about.education.map((edu) => (
-                    <div
-                      key={edu.title}
-                      className="border-l-2 border-white/10 pl-6 transition-colors hover:border-tertiary"
-                    >
-                      <p className="font-tech text-[14px] text-tertiary">
-                        {edu.years}
-                      </p>
-                      <p className="font-body text-body-lg font-bold text-on-surface">
-                        {edu.title}
-                      </p>
-                      <p className="font-body text-body-md text-on-surface-variant">
-                        {edu.place}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Process */}
-              <div>
-                <h3 className="mb-6 font-tech text-label uppercase text-primary">
-                  {about.process.heading}
-                </h3>
-                <p className="font-body text-body-md leading-relaxed text-on-surface-variant">
-                  {about.process.text}
-                </p>
-                <div className="mt-12 flex flex-wrap gap-2">
-                  {about.process.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="rounded border border-white/5 bg-surface-variant px-2 py-1 font-tech text-[10px] uppercase text-tertiary"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </div>
+        {/* Education + process */}
+        <div className="glass group relative overflow-hidden rounded-xl p-12">
+          <div className="pointer-events-none absolute right-0 top-0 p-6 text-primary opacity-20 transition-opacity group-hover:opacity-100">
+            <Icon name="fingerprint" size={64} />
           </div>
 
-          {/* Skills */}
-          <div id="skills" className="glass relative rounded-xl p-12">
-            <h3 className="mb-12 font-tech text-label uppercase text-primary">
-              Software &amp; Skills
-            </h3>
-            <div className="space-y-6">
-              {skills.map((skill) => (
-                <div key={skill.name} className="group">
-                  <div className="mb-1 flex items-end justify-between">
-                    <p className="font-tech text-label uppercase text-on-surface">
-                      {skill.name}
+          <div className="relative z-10 grid grid-cols-1 gap-12 md:grid-cols-2">
+            {/* Education */}
+            <div>
+              <h3 className="mb-6 font-tech text-label uppercase tracking-widest text-primary">
+                Education
+              </h3>
+              <div className="space-y-6">
+                {about.education.map((edu) => (
+                  <div
+                    key={edu.title}
+                    className="border-l-2 border-white/10 pl-6 transition-colors hover:border-tertiary"
+                  >
+                    <p className="font-tech text-[14px] text-tertiary">
+                      {edu.years}
                     </p>
-                    <p className="font-tech text-label text-tertiary">
-                      {skill.level}%
+                    <p className="font-body text-body-lg font-bold text-on-surface">
+                      {edu.title}
+                    </p>
+                    <p className="font-body text-body-md text-on-surface-variant">
+                      {edu.place}
                     </p>
                   </div>
-                  <div className="h-2 w-full overflow-hidden rounded-full bg-white/5">
-                    <div
-                      className="h-full rounded-full bg-tertiary transition-all duration-1000 group-hover:bg-primary"
-                      style={{ width: `${skill.level}%` }}
-                    />
-                  </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
-            <div className="mt-20 border-t border-white/10 pt-12">
-              <div className="flex items-center justify-between font-tech text-[10px] text-on-surface-variant">
-                <span>ALWAYS LEARNING</span>
-                <Icon name="check" size={14} className="text-tertiary" />
+
+            {/* How I work */}
+            <div>
+              <h3 className="mb-6 font-tech text-label uppercase tracking-widest text-primary">
+                {about.process.heading}
+              </h3>
+              <p className="font-body text-body-md leading-relaxed text-on-surface-variant">
+                {about.process.text}
+              </p>
+              <div className="mt-12 flex flex-wrap gap-2">
+                {about.process.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="rounded border border-white/5 bg-surface-variant px-2 py-1 font-tech text-[10px] uppercase text-tertiary"
+                  >
+                    {tag}
+                  </span>
+                ))}
               </div>
             </div>
           </div>
