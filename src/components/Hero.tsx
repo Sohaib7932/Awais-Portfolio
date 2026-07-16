@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { hero } from "@/data/portfolio";
 import { Icon } from "@/components/Icon";
+import { TiltCard } from "@/components/TiltCard";
 
 export function Hero() {
   return (
@@ -56,7 +57,7 @@ export function Hero() {
           <div className="relative w-full max-w-2xl">
             <div className="absolute -inset-10 rounded-full bg-primary/20 blur-[100px]" />
             <div className="absolute -inset-10 rounded-full bg-tertiary/10 blur-[80px]" />
-            <div className="glass relative z-10 rounded-xl p-2">
+            <TiltCard strength={30} className="glass relative z-10 rounded-xl p-2">
               <Image
                 src="/illustration.png"
                 alt="Muhammad Awais — 3D animation and game development artwork"
@@ -65,7 +66,7 @@ export function Hero() {
                 priority
                 className="h-auto w-full rounded-lg shadow-2xl"
               />
-            </div>
+            </TiltCard>
           </div>
         </div>
       </div>

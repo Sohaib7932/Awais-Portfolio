@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { profile, sideNavLinks } from "@/data/portfolio";
 import { Icon } from "@/components/Icon";
+import { ContactTrigger } from "@/components/contact/ContactTrigger";
 
 /* Collapsed rail that expands on hover (desktop only).
    These links only jump between sections of the home page. */
@@ -38,12 +39,9 @@ export function SideNavBar() {
 
       {/* Bottom CTA */}
       <div className="mt-auto w-full p-6">
-        <a
-          href={`mailto:${profile.email}`}
-          className="block w-full whitespace-nowrap rounded-lg bg-tertiary py-2 text-center font-tech text-[10px] font-bold uppercase tracking-widest text-on-tertiary opacity-0 transition-opacity group-hover:opacity-100"
-        >
+        <ContactTrigger className="block w-full whitespace-nowrap rounded-lg bg-tertiary py-2 text-center font-tech text-[10px] font-bold uppercase tracking-widest text-on-tertiary opacity-0 transition-opacity group-hover:opacity-100">
           Get in Touch
-        </a>
+        </ContactTrigger>
       </div>
     </aside>
   );

@@ -10,7 +10,24 @@ export const profile = {
   name: "Muhammad Awais",
   role: "3D Animator & Game Developer",
   status: "Available for Work",
-  email: "awais@example.com",
+  email: "awais.m4325@gmail.com",
+};
+
+/* Contact form */
+export const contact = {
+  eyebrow: "Get in Touch",
+  title: "Let's Work Together",
+  description:
+    "Have an animation or game idea in mind? Send me a message and I'll get back to you as soon as I can.",
+  fields: {
+    name: "Your Name",
+    email: "Your Email",
+    subject: "Subject",
+    message: "Your Message",
+  },
+  submit: "Send Message",
+  sending: "Opening your email app…",
+  sent: "Thanks! Your email app should now be open with the message ready to send.",
 };
 
 /* Top navigation — these open full, separate pages */

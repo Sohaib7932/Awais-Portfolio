@@ -1,7 +1,4 @@
-"use client";
-
 import Image from "next/image";
-import { useRef } from "react";
 import type { Project } from "@/data/portfolio";
 import {
   accentBackdrop,
@@ -11,32 +8,15 @@ import {
   accentText,
 } from "@/lib/accents";
 import { Icon } from "@/components/Icon";
+import { TiltCard } from "@/components/TiltCard";
 
 /* Large archive card: full-bleed artwork, details overlaid at the bottom,
    and a subtle 3D tilt that follows the cursor. */
 export function ProjectCard({ project }: { project: Project }) {
-  const ref = useRef<HTMLElement>(null);
-
-  const handleMove = (e: React.MouseEvent) => {
-    const el = ref.current;
-    if (!el) return;
-    const rect = el.getBoundingClientRect();
-    const rotateX = (e.clientY - rect.top - rect.height / 2) / 25;
-    const rotateY = (rect.width / 2 - (e.clientX - rect.left)) / 25;
-    el.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-  };
-
-  const handleLeave = () => {
-    const el = ref.current;
-    if (el) el.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg)";
-  };
-
   return (
-    <article
-      ref={ref}
-      onMouseMove={handleMove}
-      onMouseLeave={handleLeave}
-      className="tilt-card glass-panel group relative flex h-[560px] flex-col overflow-hidden rounded-xl"
+    <TiltCard
+      strength={25}
+      className="glass-panel group relative flex h-[560px] flex-col overflow-hidden rounded-xl"
     >
       {/* Artwork */}
       <div className="absolute inset-0 z-0 overflow-hidden">
@@ -116,6 +96,6 @@ export function ProjectCard({ project }: { project: Project }) {
           </div>
         </div>
       </div>
-    </article>
+    </TiltCard>
   );
 }

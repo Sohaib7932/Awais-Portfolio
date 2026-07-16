@@ -6,6 +6,7 @@ import { CursorGlow } from "@/components/CursorGlow";
 import { TopNavBar } from "@/components/TopNavBar";
 import { SideNavBar } from "@/components/SideNavBar";
 import { Footer } from "@/components/Footer";
+import { ContactProvider } from "@/components/contact/ContactProvider";
 
 const sora = Sora({
   subsets: ["latin"],
@@ -36,16 +37,18 @@ export default function RootLayout({
       className={`${sora.variable} ${hanken.variable} scroll-smooth`}
     >
       <body>
-        <ShaderBackground />
-        <CursorGlow />
-        <TopNavBar />
-        <SideNavBar />
+        <ContactProvider>
+          <ShaderBackground />
+          <CursorGlow />
+          <TopNavBar />
+          <SideNavBar />
 
-        {/* Offset clears the fixed sidebar on desktop */}
-        <div className="relative z-10 md:ml-20">
-          {children}
-          <Footer />
-        </div>
+          {/* Offset clears the fixed sidebar on desktop */}
+          <div className="relative z-10 md:ml-20">
+            {children}
+            <Footer />
+          </div>
+        </ContactProvider>
       </body>
     </html>
   );

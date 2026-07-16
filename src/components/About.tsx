@@ -1,5 +1,6 @@
 import { about } from "@/data/portfolio";
 import { Icon } from "@/components/Icon";
+import { TiltCard } from "@/components/TiltCard";
 
 export function About() {
   return (
@@ -24,7 +25,10 @@ export function About() {
         </div>
 
         {/* Education + process */}
-        <div className="glass group relative overflow-hidden rounded-xl p-12">
+        <TiltCard
+          strength={70}
+          className="glass group relative overflow-hidden rounded-xl p-12"
+        >
           <div className="pointer-events-none absolute right-0 top-0 p-6 text-primary opacity-20 transition-opacity group-hover:opacity-100">
             <Icon name="fingerprint" size={64} />
           </div>
@@ -75,7 +79,7 @@ export function About() {
               </div>
             </div>
           </div>
-        </div>
+        </TiltCard>
       </div>
     </section>
   );
