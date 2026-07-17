@@ -26,8 +26,8 @@ export const contact = {
     message: "Your Message",
   },
   submit: "Send Message",
-  sending: "Opening your email app…",
-  sent: "Thanks! Your email app should now be open with the message ready to send.",
+  sending: "Sending…",
+  sent: "Thanks for reaching out! Your message has landed in my inbox and I'll reply as soon as I can.",
 };
 
 /* Top navigation — these open full, separate pages */

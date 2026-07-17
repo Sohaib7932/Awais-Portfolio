@@ -19,7 +19,7 @@ export default function ExperiencePage() {
         description="A short history of where I studied, where I have worked, and what I was animating along the way."
       />
 
-      <section className="mb-20 px-6 pb-20 md:px-20">
+      <section className="mb-12 px-5 md:mb-20 pb-14 sm:px-6 md:px-20 md:pb-20">
         <div className="mx-auto max-w-[1440px]">
           <div className="relative space-y-6 before:absolute before:left-[7px] before:top-2 before:h-full before:w-px before:bg-gradient-to-b before:from-primary/50 before:via-tertiary/30 before:to-transparent">
             {experience.timeline.map((item) => (
@@ -29,7 +29,7 @@ export default function ExperiencePage() {
                   className={`absolute left-0 top-2 h-4 w-4 rotate-45 ${accentBg[item.accent]}`}
                 />
 
-                <div className="hologram-card glass-panel rounded-xl p-12">
+                <div className="hologram-card glass-panel rounded-xl p-6 sm:p-8 md:p-12">
                   <p
                     className={`font-tech text-label uppercase tracking-widest ${accentText[item.accent]}`}
                   >

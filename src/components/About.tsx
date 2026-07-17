@@ -4,7 +4,7 @@ import { TiltCard } from "@/components/TiltCard";
 
 export function About() {
   return (
-    <section id="about" className="mb-20 px-6 py-20 md:px-20">
+    <section id="about" className="mb-12 px-5 md:mb-20 py-14 sm:px-6 md:px-20 md:py-20">
       <div className="mx-auto max-w-[1440px]">
         {/* Heading */}
         <div className="mb-12 flex flex-col justify-between gap-6 md:flex-row md:items-end">
@@ -27,7 +27,7 @@ export function About() {
         {/* Education + process */}
         <TiltCard
           strength={70}
-          className="glass group relative overflow-hidden rounded-xl p-12"
+          className="glass group relative overflow-hidden rounded-xl p-6 sm:p-8 md:p-12"
         >
           <div className="pointer-events-none absolute right-0 top-0 p-6 text-primary opacity-20 transition-opacity group-hover:opacity-100">
             <Icon name="fingerprint" size={64} />

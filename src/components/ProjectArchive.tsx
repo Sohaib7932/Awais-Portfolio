@@ -16,7 +16,7 @@ export function ProjectArchive({
   const list = limit ? projects.slice(0, limit) : projects;
 
   return (
-    <section id={id} className="mb-20 px-6 py-20 md:px-20">
+    <section id={id} className="mb-12 px-5 md:mb-20 py-14 sm:px-6 md:px-20 md:py-20">
       <div className="mx-auto max-w-[1440px]">
         {/* Heading + chips */}
         <div className="mb-12 flex flex-col justify-between gap-6 md:flex-row md:items-center">
@@ -51,7 +51,7 @@ export function ProjectArchive({
         </div>
 
         {/* Cards */}
-        <div className="perspective grid grid-cols-1 gap-12 lg:grid-cols-2">
+        <div className="perspective grid grid-cols-1 gap-6 sm:gap-8 lg:grid-cols-2 lg:gap-12">
           {list.map((project) => (
             <ProjectCard key={project.slug} project={project} />
           ))}
@@ -59,7 +59,7 @@ export function ProjectArchive({
 
         {/* Stats */}
         {showStats && (
-          <div className="mt-20 flex justify-center gap-20">
+          <div className="mt-12 flex justify-center gap-10 sm:gap-20 md:mt-20">
             {stats.map((stat, i) => (
               <div key={stat.label} className="text-center">
                 <p

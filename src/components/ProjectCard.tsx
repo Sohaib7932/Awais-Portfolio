@@ -16,7 +16,7 @@ export function ProjectCard({ project }: { project: Project }) {
   return (
     <TiltCard
       strength={25}
-      className="glass-panel group relative flex h-[560px] flex-col overflow-hidden rounded-xl"
+      className="glass-panel group relative flex h-[440px] flex-col overflow-hidden rounded-xl sm:h-[520px] lg:h-[560px]"
     >
       {/* Artwork */}
       <div className="absolute inset-0 z-0 overflow-hidden">
@@ -55,7 +55,7 @@ export function ProjectCard({ project }: { project: Project }) {
       </div>
 
       {/* Details */}
-      <div className="relative z-10 mt-auto flex flex-col items-start gap-6 p-12">
+      <div className="relative z-10 mt-auto flex flex-col items-start gap-4 p-5 sm:gap-6 sm:p-8 lg:p-10">
         <div className="flex flex-wrap gap-2">
           {project.tags.map((tag) => (
             <span
@@ -76,10 +76,10 @@ export function ProjectCard({ project }: { project: Project }) {
           </p>
         </div>
 
-        <div className="flex w-full items-center gap-6">
+        <div className="flex w-full items-center gap-4 sm:gap-6">
           <a
             href={`/work#${project.slug}`}
-            className={`flex flex-1 items-center justify-center gap-3 rounded-lg bg-white py-4 font-tech text-label font-bold uppercase tracking-widest text-black transition-all ${accentHoverBtn[project.accent]}`}
+            className={`flex flex-1 items-center justify-center gap-3 rounded-lg bg-white py-3 font-tech text-[10px] font-bold uppercase tracking-widest text-black transition-all sm:py-4 sm:text-label ${accentHoverBtn[project.accent]}`}
           >
             View Details
             <Icon name="arrow-right" size={18} />

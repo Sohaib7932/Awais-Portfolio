@@ -55,22 +55,23 @@
   --radius-lg: 0.25rem;
   --radius-xl: 0.5rem;
 
-  /* Typography sizes */
-  --text-display-lg: 72px;
+  /* Typography sizes — fluid, so headings scale with the viewport
+     instead of overflowing on small screens. */
+  --text-display-lg: clamp(2.25rem, 6.4vw, 72px); /* 36px → 72px */
   --text-display-lg--line-height: 1.1;
   --text-display-lg--letter-spacing: -0.04em;
   --text-display-lg--font-weight: 800;
 
-  --text-display-sm: 48px;
+  --text-display-sm: clamp(1.75rem, 4vw, 48px); /* 28px → 48px */
   --text-display-sm--line-height: 1.2;
   --text-display-sm--letter-spacing: -0.02em;
   --text-display-sm--font-weight: 700;
 
-  --text-headline: 32px;
+  --text-headline: clamp(1.375rem, 2.6vw, 32px); /* 22px → 32px */
   --text-headline--line-height: 1.3;
   --text-headline--font-weight: 600;
 
-  --text-body-lg: 18px;
+  --text-body-lg: clamp(1rem, 1.1vw, 18px); /* 16px → 18px */
   --text-body-lg--line-height: 1.6;
   --text-body-lg--font-weight: 400;
 
@@ -87,11 +88,17 @@
 /* ------------------------------------------------------------------ */
 /*  Base                                                              */
 /* ------------------------------------------------------------------ */
+html {
+  /* `clip` (not `hidden`) stops decorative overflow from ever creating a
+     sideways scrollbar, without turning the root into a scroll container. */
+  overflow-x: clip;
+}
+
 body {
   background-color: #080808;
   color: var(--color-on-surface);
   font-family: var(--font-body);
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 /* ------------------------------------------------------------------ */

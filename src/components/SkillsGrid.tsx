@@ -5,23 +5,27 @@ import { Icon } from "@/components/Icon";
 /* The "toolkit" grid — one square hologram card per piece of software. */
 export function SkillsGrid({ id = "skills" }: { id?: string }) {
   return (
-    <section id={id} className="mb-20 px-6 py-20 md:px-20">
+    <section id={id} className="mb-12 px-5 md:mb-20 py-14 sm:px-6 md:px-20 md:py-20">
       <div className="mx-auto max-w-[1440px]">
         {/* Centered heading flanked by fading dividers */}
-        <div className="mb-12 flex items-center gap-6">
+        <div className="mb-4 flex items-center gap-3 sm:gap-6">
           <div className="h-px flex-1 bg-gradient-to-r from-transparent to-primary/30" />
-          <h2 className="flex items-center gap-3 text-center font-display text-headline uppercase tracking-tight md:text-display-sm">
-            <Icon name="chip" size={32} className="shrink-0 text-primary" />
+          <h2 className="flex items-center gap-2 text-center font-display text-headline uppercase tracking-tight sm:gap-3 md:text-display-sm">
+            <Icon
+              name="chip"
+              size={28}
+              className="shrink-0 text-primary sm:h-8 sm:w-8"
+            />
             {skillsSection.title}
           </h2>
           <div className="h-px flex-1 bg-gradient-to-l from-transparent to-primary/30" />
         </div>
 
-        <p className="mb-12 text-center font-body text-body-md text-on-surface-variant">
+        <p className="mb-10 text-center font-body text-body-md text-on-surface-variant md:mb-12">
           {skillsSection.subtitle}
         </p>
 
-        <div className="grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-6">
+        <div className="grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-3 lg:grid-cols-6">
           {toolkit.map((tool, i) => (
             <div
               key={tool.name}

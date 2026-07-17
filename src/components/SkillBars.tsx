@@ -4,9 +4,9 @@ import { Icon } from "@/components/Icon";
 /* Proficiency bars — shown on the detailed Skills page. */
 export function SkillBars() {
   return (
-    <section className="mb-20 px-6 pb-20 md:px-20">
+    <section className="mb-12 px-5 md:mb-20 pb-14 sm:px-6 md:px-20 md:pb-20">
       <div className="mx-auto max-w-[1440px]">
-        <div className="glass relative rounded-xl p-12">
+        <div className="glass relative rounded-xl p-6 sm:p-8 md:p-12">
           <h3 className="mb-12 font-tech text-label uppercase tracking-widest text-primary">
             How Confident I Am
           </h3>

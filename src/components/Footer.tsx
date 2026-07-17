@@ -7,7 +7,7 @@ export function Footer() {
   return (
     <footer
       id="contact"
-      className="relative flex flex-col items-center justify-between gap-6 overflow-hidden border-t border-white/10 bg-surface-lowest bg-gradient-to-t from-primary/10 to-transparent px-6 py-12 md:flex-row md:px-20"
+      className="relative flex flex-col items-center justify-between gap-6 overflow-hidden border-t border-white/10 bg-surface-lowest bg-gradient-to-t from-primary/10 to-transparent px-5 py-10 text-center sm:px-6 md:flex-row md:px-20 md:py-12 md:text-left"
     >
       {/* Decorative node */}
       <div className="absolute left-1/2 top-0 h-[2px] w-24 -translate-x-1/2 bg-gradient-to-r from-transparent via-primary to-transparent" />
@@ -22,7 +22,7 @@ export function Footer() {
         </p>
       </div>
 
-      <div className="flex items-center gap-12">
+      <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-4 md:gap-12">
         {footer.links.map((link) => (
           <Link
             key={link.href}

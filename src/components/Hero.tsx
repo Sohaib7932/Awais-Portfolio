@@ -7,11 +7,11 @@ export function Hero() {
   return (
     <section
       id="home"
-      className="relative flex min-h-screen flex-col justify-center px-6 py-20 md:px-20"
+      className="relative flex min-h-screen flex-col justify-center overflow-hidden px-5 py-14 sm:px-6 md:px-20 md:py-20"
     >
       <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12">
         {/* Left — copy */}
-        <div className="relative z-20 space-y-12 lg:col-span-6">
+        <div className="relative z-20 space-y-6 sm:space-y-8 lg:col-span-6 lg:space-y-12">
           <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-3 py-1 font-tech text-label text-primary">
             <span className="h-2 w-2 animate-pulse rounded-full bg-primary" />
             {hero.badge}
@@ -38,13 +38,13 @@ export function Hero() {
           <div className="flex flex-wrap items-center gap-6 pt-2">
             <a
               href="#work"
-              className="scan-line glow-hover relative overflow-hidden rounded-lg bg-gradient-to-r from-inverse-primary to-secondary-container px-12 py-6 font-tech text-label font-bold uppercase tracking-widest text-white transition-transform hover:-translate-y-1"
+              className="scan-line glow-hover relative overflow-hidden rounded-lg bg-gradient-to-r from-inverse-primary to-secondary-container px-6 py-3.5 font-tech text-[10px] font-bold uppercase tracking-widest sm:px-10 sm:py-4 sm:text-label text-white transition-transform hover:-translate-y-1"
             >
               {hero.primaryCta}
             </a>
             <a
               href="#contact"
-              className="flex items-center gap-2 rounded-lg border border-white/20 bg-white/5 px-12 py-6 font-tech text-label font-bold uppercase tracking-widest text-tertiary backdrop-blur-md transition-all hover:bg-white/10 hover:border-tertiary/50"
+              className="flex items-center gap-2 rounded-lg border border-white/20 bg-white/5 px-6 py-3.5 font-tech text-[10px] font-bold uppercase tracking-widest sm:px-10 sm:py-4 sm:text-label text-tertiary backdrop-blur-md transition-all hover:bg-white/10 hover:border-tertiary/50"
             >
               <Icon name="download" size={16} />
               {hero.tertiaryCta}

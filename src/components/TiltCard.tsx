@@ -18,6 +18,13 @@ export function TiltCard({
   const handleMove = (e: React.MouseEvent) => {
     const el = ref.current;
     if (!el) return;
+    /* Skip on touch screens and for users who prefer less motion */
+    if (
+      !window.matchMedia("(hover: hover) and (pointer: fine)").matches ||
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) {
+      return;
+    }
     const rect = el.getBoundingClientRect();
     const rotateX = (e.clientY - rect.top - rect.height / 2) / strength;
     const rotateY = (rect.width / 2 - (e.clientX - rect.left)) / strength;
