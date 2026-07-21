@@ -12,31 +12,52 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
-## ⚠️ Contact form — one setup step required
+## Contact form — how it delivers
 
-The contact form emails **awais.m4325@gmail.com** directly. It needs a free
-API key before it will actually send. Until then, the form shows a message
-asking visitors to email directly (it won't fail silently).
+Messages go to **awais.m4325@gmail.com**. There are two modes:
+
+| Mode | Setup | Where mail lands |
+|---|---|---|
+| **FormSubmit** (default) | one activation click | usually **spam** |
+| **Gmail SMTP** | add `SMTP_PASS` | **inbox** ✅ |
+
+### Mode 1 — works now, no password
+
+FormSubmit has already emailed an **"Activate Form"** link to
+awais.m4325@gmail.com. Open it (check the spam folder) and click the link
+**once** — after that the form forwards messages.
+
+Because FormSubmit sends from *their* servers rather than your Gmail, those
+emails commonly land in spam. Marking one "Not spam" helps, but the real
+fix is Mode 2.
+
+### Mode 2 — recommended, lands in your inbox
+
+> **The email address alone is not enough** — SMTP has to log in to Gmail.
+> Google blocks normal passwords for apps, so you need an **App Password**.
 
 **Setup (about 2 minutes):**
 
-1. Sign up at [resend.com](https://resend.com) using **awais.m4325@gmail.com**
-2. Verify the email address
-3. Go to [resend.com/api-keys](https://resend.com/api-keys) → **Create API Key** → copy it
-4. In the project root, copy `.env.example` to `.env.local` and paste the key:
+1. Turn on 2-Step Verification for the account (required by Google):
+   <https://myaccount.google.com/signinoptions/two-step-verification>
+2. Go to <https://myaccount.google.com/apppasswords>
+3. Type any name (e.g. `Portfolio`) → **Create**
+4. Google shows a 16-character code like `abcd efgh ijkl mnop`
+5. Copy `.env.example` to `.env.local` and paste it **without spaces**:
    ```
-   RESEND_API_KEY=re_your_key_here
+   SMTP_PASS=abcdefghijklmnop
    ```
-5. Restart the dev server (`npm run dev`)
+6. Restart the dev server (`npm run dev`) and send yourself a test message
 
-Send yourself a test message to confirm.
+Replies work naturally: the email arrives from your own address with the
+visitor set as **Reply-To**, so hitting Reply goes straight back to them.
 
-> Without a custom domain, Resend only delivers to the address you signed up
-> with — which is exactly what's needed here.
->
-> When deploying (e.g. Vercel), add `RESEND_API_KEY` in the host's
+> When deploying (e.g. Vercel), add `SMTP_PASS` in the host's
 > **Environment Variables** settings. `.env.local` is git-ignored and is
 > never uploaded.
+>
+> Using a different mail provider? Override `SMTP_HOST`, `SMTP_PORT` and
+> `SMTP_USER` in `.env.local` — no code changes needed.
 
 ## Editing the content
 

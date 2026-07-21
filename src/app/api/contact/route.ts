@@ -1,18 +1,22 @@
 import { NextResponse } from "next/server";
+import nodemailer from "nodemailer";
 
-/* Sends the contact form straight to Awais's inbox via Resend.
-   Uses the REST API directly so there's no extra dependency to install.
+/* Sends the contact form straight to Awais's inbox over SMTP (Gmail).
 
    Required environment variable (see .env.example):
-     RESEND_API_KEY   — from https://resend.com/api-keys
-   Optional:
-     CONTACT_TO_EMAIL   — defaults to Awais's address
-     CONTACT_FROM_EMAIL — defaults to Resend's shared sending address
+     SMTP_PASS  — a Gmail *App Password* (16 characters, no spaces).
+                  Your normal Gmail password will NOT work; Google blocks it.
+                  Create one at https://myaccount.google.com/apppasswords
+
+   Optional (sensible defaults already set for Gmail):
+     SMTP_HOST, SMTP_PORT, SMTP_USER, CONTACT_TO_EMAIL
 */
 
-const TO_EMAIL = process.env.CONTACT_TO_EMAIL || "awais.m4325@gmail.com";
-const FROM_EMAIL =
-  process.env.CONTACT_FROM_EMAIL || "Portfolio <onboarding@resend.dev>";
+const SMTP_HOST = process.env.SMTP_HOST || "smtp.gmail.com";
+const SMTP_PORT = Number(process.env.SMTP_PORT || 465);
+const SMTP_USER = process.env.SMTP_USER || "awais.m4325@gmail.com";
+const SMTP_PASS = process.env.SMTP_PASS;
+const TO_EMAIL = process.env.CONTACT_TO_EMAIL || SMTP_USER;
 
 const escapeHtml = (value: string) =>
   value
@@ -21,19 +25,60 @@ const escapeHtml = (value: string) =>
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;");
 
-export async function POST(request: Request) {
-  const apiKey = process.env.RESEND_API_KEY;
+/* Fallback used when no App Password is configured: FormSubmit forwards the
+   message to TO_EMAIL without needing any credentials. It works instantly,
+   but because the mail is sent by their servers (not your Gmail) it often
+   lands in the spam folder — set SMTP_PASS to send from your own account. */
+async function sendViaFormSubmit(fields: {
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+}) {
+  const origin = process.env.SITE_ORIGIN || "http://localhost:3000";
 
-  if (!apiKey) {
-    return NextResponse.json(
-      {
-        error:
-          "Email sending isn't set up yet. Please use the direct email address below.",
+  const res = await fetch(
+    `https://formsubmit.co/ajax/${encodeURIComponent(TO_EMAIL)}`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        /* FormSubmit rejects requests without a browser-like origin */
+        Origin: origin,
+        Referer: `${origin}/`,
       },
-      { status: 503 }
-    );
+      body: JSON.stringify({
+        name: fields.name,
+        email: fields.email,
+        _subject: fields.subject
+          ? `Portfolio: ${fields.subject}`
+          : `Portfolio: new message from ${fields.name}`,
+        _replyto: fields.email,
+        _captcha: "false",
+        _template: "table",
+        message: fields.message,
+      }),
+    }
+  );
+
+  /* FormSubmit answers 200 even on failure — the real result is in the body. */
+  const json = (await res.json().catch(() => ({}))) as {
+    success?: string;
+    message?: string;
+  };
+
+  if (json.success !== "true") {
+    const detail = json.message || `FormSubmit responded ${res.status}`;
+    const err = new Error(detail) as Error & { needsActivation?: boolean };
+    err.needsActivation = /activat/i.test(detail);
+    throw err;
   }
 
+  return json;
+}
+
+export async function POST(request: Request) {
   let payload: Record<string, unknown>;
   try {
     payload = await request.json();
@@ -69,49 +114,89 @@ export async function POST(request: Request) {
     );
   }
 
-  const finalSubject = subject
-    ? `Portfolio: ${subject}`
-    : `Portfolio: new message from ${name}`;
+  /* No App Password yet → forward through FormSubmit so the form still works. */
+  if (!SMTP_PASS) {
+    try {
+      await sendViaFormSubmit({ name, email, subject, message });
+      console.warn(
+        "Contact form sent via FormSubmit fallback. To deliver straight to your " +
+          "inbox (instead of spam), set SMTP_PASS to a Gmail App Password."
+      );
+      return NextResponse.json({ ok: true, viaFallback: true });
+    } catch (err) {
+      const e = err as Error & { needsActivation?: boolean };
+      console.error("FormSubmit fallback failed:", e.message);
 
-  try {
-    const res = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        from: FROM_EMAIL,
-        to: [TO_EMAIL],
-        reply_to: email,
-        subject: finalSubject,
-        text: `${message}\n\n—\nFrom: ${name}\nEmail: ${email}`,
-        html: `
-          <div style="font-family:system-ui,sans-serif;line-height:1.6">
-            <h2 style="margin:0 0 16px">New message from your portfolio</h2>
-            <p style="white-space:pre-wrap">${escapeHtml(message)}</p>
-            <hr style="border:none;border-top:1px solid #ddd;margin:24px 0" />
-            <p style="margin:0"><strong>From:</strong> ${escapeHtml(name)}</p>
-            <p style="margin:0"><strong>Email:</strong>
-              <a href="mailto:${escapeHtml(email)}">${escapeHtml(email)}</a>
-            </p>
-          </div>
-        `,
-      }),
-    });
+      if (e.needsActivation) {
+        console.error(
+          `→ ACTION NEEDED: FormSubmit emailed an "Activate Form" link to ${TO_EMAIL}. ` +
+            "Open that email (check spam) and click the link once — then the form works."
+        );
+        return NextResponse.json(
+          {
+            error:
+              "The form isn't activated yet. Awais — check your inbox for the " +
+              "'Activate Form' email and click the link once.",
+          },
+          { status: 503 }
+        );
+      }
 
-    if (!res.ok) {
-      const detail = await res.text();
-      console.error("Resend failed:", res.status, detail);
       return NextResponse.json(
-        { error: "Sorry — the message couldn't be sent. Please email directly." },
+        {
+          error:
+            "Sorry — the message couldn't be sent. Please email directly.",
+        },
         { status: 502 }
       );
     }
+  }
+
+  try {
+    const transporter = nodemailer.createTransport({
+      host: SMTP_HOST,
+      port: SMTP_PORT,
+      secure: SMTP_PORT === 465, // 465 = implicit TLS, 587 = STARTTLS
+      auth: { user: SMTP_USER, pass: SMTP_PASS },
+    });
+
+    await transporter.sendMail({
+      /* Gmail requires the authenticated account as the sender, so the
+         visitor's address goes in replyTo — hitting Reply just works. */
+      from: `"${name} (Portfolio)" <${SMTP_USER}>`,
+      to: TO_EMAIL,
+      replyTo: `"${name}" <${email}>`,
+      subject: subject
+        ? `Portfolio: ${subject}`
+        : `Portfolio: new message from ${name}`,
+      text: `${message}\n\n—\nFrom: ${name}\nEmail: ${email}`,
+      html: `
+        <div style="font-family:system-ui,sans-serif;line-height:1.6">
+          <h2 style="margin:0 0 16px">New message from your portfolio</h2>
+          <p style="white-space:pre-wrap">${escapeHtml(message)}</p>
+          <hr style="border:none;border-top:1px solid #ddd;margin:24px 0" />
+          <p style="margin:0"><strong>From:</strong> ${escapeHtml(name)}</p>
+          <p style="margin:0"><strong>Email:</strong>
+            <a href="mailto:${escapeHtml(email)}">${escapeHtml(email)}</a>
+          </p>
+        </div>
+      `,
+    });
 
     return NextResponse.json({ ok: true });
   } catch (err) {
-    console.error("Contact route error:", err);
+    const detail = err instanceof Error ? err.message : String(err);
+    console.error("SMTP send failed:", detail);
+
+    /* Bad credentials are by far the most common cause — say so clearly
+       in the server log so it's easy to fix. */
+    if (/invalid login|username and password|535|534/i.test(detail)) {
+      console.error(
+        "→ Gmail rejected the login. SMTP_PASS must be a 16-character App Password " +
+          "from https://myaccount.google.com/apppasswords (not your normal password)."
+      );
+    }
+
     return NextResponse.json(
       { error: "Sorry — the message couldn't be sent. Please email directly." },
       { status: 502 }
